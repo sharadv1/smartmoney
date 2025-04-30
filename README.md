@@ -1,36 +1,132 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI-Driven Trading Journal
+
+A zero-code, AI-assisted trading journal application built with Next.js and Supabase.
+
+## Features
+
+- **Dashboard**: KPI tiles, calendar heat map, and recent trades table
+- **Trade Management**: Log trades with rich metadata and track performance
+- **Journal System**: Weekly and daily planning/review with AI-assisted insights
+- **Risk/Reward Analysis**: Real-time calculation of risk, reward, and R-multiple
+- **Partial Closures**: Support for partial position closures and reopening
+- **AI Integration**: Auto-generated trade reviews and pattern detection
+
+## Tech Stack
+
+- **Frontend**: Next.js 15, React 19, TypeScript, Tailwind CSS, shadcn/ui
+- **Backend**: Supabase (PostgreSQL, Auth, Storage)
+- **AI**: OpenAI API integration for trade analysis
+- **Visualization**: Recharts for data visualization
+- **State Management**: React Context and React Query
+- **Forms**: React Hook Form with Zod validation
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Node.js 18+ and npm
+- Supabase account
+- OpenAI API key (optional, for AI features)
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/trading-journal.git
+   cd trading-journal
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Create a `.env.local` file based on `.env.local.example`:
+   ```bash
+   cp .env.local.example .env.local
+   ```
+
+4. Update the `.env.local` file with your Supabase and OpenAI credentials.
+
+5. Set up the Supabase database:
+   - Create a new Supabase project
+   - Run the SQL script in `supabase/schema.sql` to create the database schema
+   - Enable Row-Level Security (RLS) policies
+
+6. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+7. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## Project Structure
+
+```
+trading-journal/
+├── app/                    # Next.js app directory
+│   ├── auth/               # Authentication pages
+│   ├── dashboard/          # Dashboard page
+│   ├── journal/            # Journal pages
+│   ├── trades/             # Trades listing and detail pages
+│   └── settings/           # Settings pages
+├── components/             # React components
+│   ├── layout/             # Layout components
+│   ├── trades/             # Trade-related components
+│   └── ui/                 # UI components (shadcn/ui)
+├── lib/                    # Utility functions and shared code
+│   ├── supabase/           # Supabase client configuration
+│   └── utils.ts            # Utility functions
+├── public/                 # Static assets
+└── supabase/               # Supabase configuration and schema
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Database Schema
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The application uses the following database tables:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `instruments`: Trading instruments (stocks, futures, forex, etc.)
+- `accounts`: User trading accounts
+- `strategies`: Trading strategies
+- `trades`: Trade records with risk/reward calculations
+- `trade_closures`: Partial or full trade closures
+- `journal_weeks`: Weekly journal entries
+- `journal_days`: Daily journal entries
 
-## Learn More
+## Features in Detail
 
-To learn more about Next.js, take a look at the following resources:
+### Dashboard
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The dashboard provides a quick overview of your trading performance with:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- KPI tiles showing key metrics (Profit Factor, Win Rate, etc.)
+- Calendar heat map visualizing daily P&L
+- Recent trades table for quick access to your latest activity
 
-## Deploy on Vercel
+### Trade Management
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Log trades with comprehensive metadata
+- Real-time risk/reward calculation
+- Support for partial closures and position management
+- Filter and search trades by various criteria
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Journal System
+
+- Weekly planning and review
+- Daily trading plans and reflections
+- Integration with trades for context-aware journaling
+- AI-assisted insights and pattern detection
+
+### AI Integration
+
+- Auto-generated trade reviews
+- Pattern detection across your trading history
+- Performance insights and improvement suggestions
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
