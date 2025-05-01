@@ -2,9 +2,13 @@ import { supabase } from '@/lib/supabase'
 import { TradeModal } from '@/components/trades/TradeForm'
 
 export default async function TradesPage() {
-  /* fetch dropdown data at build-time */
-  const { data: accounts = [] }   = await supabase.from('accounts').select('id,name')
-  const { data: strategies = [] } = await supabase.from('strategies').select('id,name')
+  // fetch data
+  const { data: accountsData }   = await supabase.from('accounts').select('id,name')
+  const { data: strategiesData } = await supabase.from('strategies').select('id,name')
+
+  // fall back to empty arrays if Supabase returns null
+  const accounts   = accountsData   ?? []
+  const strategies = strategiesData ?? []
 
   return (
     <div className="space-y-4">
