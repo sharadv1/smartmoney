@@ -6,10 +6,13 @@ import { getAccounts, getStrategies } from "@/app/actions/trade-actions";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import type { PageProps } from "next";
+export default async function TradeDetail({
+    params,
+  }: {
+    params: { id: string };
+  }) {
+    const { id } = params;
 
-export default async function TradeDetail({ params }: PageProps<{ id: string }>) {
-  const { id } = params
   // Fetch the trade
   const { success, data: trade, error } = await fetchTradeById(params.id);
   
