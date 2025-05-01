@@ -9,10 +9,10 @@ import { redirect } from "next/navigation";
 
 export default async function DashboardPage() {
   // Check authentication
-  const user = await getUser();
-  if (!user) {
-    redirect('/auth/login');
-  }
+  // const user = await getUser();
+// if (!user) {
+//   redirect('/auth/login');
+// }
 
   // Fetch accounts and strategies for the trade form
   const { data: accounts = [] } = await getAccounts();
