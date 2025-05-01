@@ -10,8 +10,7 @@ import {
   Select, SelectTrigger, SelectValue,
   SelectContent, SelectItem,
 } from '@/components/ui/select'
-import { Modal, ModalTrigger, ModalContent } from '@/components/ui/modal'
-
+import { Dialog, DialogTrigger, DialogContent } from '@/components/ui/dialog'
 /* ---------- validation schema ---------- */
 const tradeSchema = z.object({
   instrument_id: z.string().uuid(),
@@ -59,12 +58,12 @@ export function TradeModal({
   }
 
   return (
-    <Modal>
-      <ModalTrigger asChild>
+    <Dialog>
+      <DialogTrigger asChild>
         <Button size="sm">New trade</Button>
-      </ModalTrigger>
+      </DialogTrigger>
 
-      <ModalContent className="max-w-lg">
+      <DialogContent className="max-w-lg">
         <form onSubmit={handleSubmit(onSubmit)} className="grid gap-6 md:grid-cols-2">
           <Input label="Opened at" type="datetime-local" {...register('opened_at')} />
           <Input label="Quantity"      {...register('qty')} />
@@ -112,7 +111,7 @@ export function TradeModal({
             Save trade
           </Button>
         </form>
-      </ModalContent>
-    </Modal>
+      </DialogContent>
+    </Dialog>
   )
 }
