@@ -18,41 +18,36 @@ module.exports = {
       },
     },
     extend: {
+      /* ---------- color tokens that Tailwind will now accept ---------- */
       colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-        },
+        // allows bg-background / text-background with optional opacity
+        background: ({ opacityValue }) =>
+          opacityValue === undefined
+            ? `hsl(var(--background))`
+            : `hsl(var(--background) / ${opacityValue})`,
+    
+        foreground: ({ opacityValue }) =>
+          opacityValue === undefined
+            ? `hsl(var(--foreground))`
+            : `hsl(var(--foreground) / ${opacityValue})`,
+    
+        border: ({ opacityValue }) =>
+          opacityValue === undefined
+            ? `hsl(var(--border))`
+            : `hsl(var(--border) / ${opacityValue})`,
+    
+        input: ({ opacityValue }) =>
+          opacityValue === undefined
+            ? `hsl(var(--input))`
+            : `hsl(var(--input) / ${opacityValue})`,
+    
+        ring: ({ opacityValue }) =>
+          opacityValue === undefined
+            ? `hsl(var(--ring))`
+            : `hsl(var(--ring) / ${opacityValue})`,
       },
+    
+      /* ---------- the rest of your existing extend keys ---------- */
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
