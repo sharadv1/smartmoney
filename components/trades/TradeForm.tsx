@@ -65,11 +65,11 @@ export function TradeModal({
 
       <DialogContent className="max-w-lg">
         <form onSubmit={handleSubmit(onSubmit)} className="grid gap-6 md:grid-cols-2">
-          <Input label="Opened at" type="datetime-local" {...register('opened_at')} />
-          <Input label="Quantity"      {...register('qty')} />
-          <Input label="Entry price"   {...register('entry_px')} />
-          <Input label="Stop price"    {...register('stop_px')} />
-          <Input label="Take-profit"   {...register('take_px')} />
+          <Input {...register('opened_at')} />
+          <Input {...register('qty')} />
+          <Input {...register('entry_px')} />
+          <Input {...register('stop_px')} />
+          <Input {...register('take_px')} />
 
           <Select {...register('direction')}>
             <SelectTrigger><SelectValue placeholder="Side" /></SelectTrigger>
