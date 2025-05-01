@@ -1,6 +1,6 @@
+import './globals.css';
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { ToastProvider, ToastEventListener } from "@/components/ui/toast";
 
