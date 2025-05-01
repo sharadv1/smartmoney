@@ -52,11 +52,17 @@ export function TradeModal({
   const rMultiple     = perUnitRisk ? (perUnitReward / perUnitRisk).toFixed(2) : '—'
 
   async function onSubmit(data: FormVals) {
-    const { error } = await supabase.from('trades').insert(data)
+    // convert Date → ISO string so it matches the DB column type
+    const payload = {
+      ...data,
+      opened_at: data.opened_at.toISOString(),
+    }
+  
+    const { error } = await supabase.from('trades').insert(payload)
     if (error) alert(error.message)
     else window.location.reload()
   }
-
+  
   return (
     <Dialog>
       <DialogTrigger asChild>
