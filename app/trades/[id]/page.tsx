@@ -2,11 +2,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { fetchTradeById } from "@/app/actions/fetch-actions";
 import { getAccounts, getStrategies } from "@/app/actions/trade-actions";
-import { TradeModal } from "@/components/trades/TradeModal";
+
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-export default async function TradeDetailPage({ params }: { params: { id: string } }) {
+import type { PageProps } from "next";
+
+export default async function TradeDetail({ params }: PageProps<{ id: string }>) {
+  const { id } = params
   // Fetch the trade
   const { success, data: trade, error } = await fetchTradeById(params.id);
   

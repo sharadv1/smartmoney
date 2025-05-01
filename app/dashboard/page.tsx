@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { TradeModal } from "@/components/trades/TradeModal";
+import { TradeModal } from '@/components/trades/TradeForm';
 import { getAccounts, getStrategies } from "@/app/actions/trade-actions";
 import { fetchDashboardStats, fetchRecentTrades } from "@/app/actions/fetch-actions";
 import Link from "next/link";
