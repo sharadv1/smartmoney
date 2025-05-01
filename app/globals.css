@@ -24,8 +24,36 @@
   * {
     border-color: hsl(var(--border));
   }
+/* app/globals.css — minimal Tailwind + shadcn scaffold  */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 47.4% 11.2%;
+    --primary:    221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+    --border:     214.3 31.8% 91.4%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 47.4% 11.2%;
+    --foreground: 210 40% 98%;
+    --primary:    217.2 91.2% 59.8%;
+    --primary-foreground: 210 40% 98%;
+  }
+
+  * {
+    border-color: hsl(var(--border));
+  }
 
   body {
-    @apply bg-background text-foreground;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
   }
+}
+  
 }
