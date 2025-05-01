@@ -123,8 +123,6 @@ export default async function DashboardPage() {
                 <TradeModal
                   accounts={accounts}
                   strategies={strategies}
-                  buttonText="Add Your First Trade"
-                  variant="outline"
                 />
               </div>
             ) : (
