@@ -4,25 +4,27 @@ import { TradeModal } from '@/components/trades/TradeForm';
 import { getAccounts, getStrategies } from "@/app/actions/trade-actions";
 import { fetchDashboardStats, fetchRecentTrades } from "@/app/actions/fetch-actions";
 import Link from "next/link";
-import { getUser } from "@/lib/supabase/server";
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+import { cookies } from 'next/headers'
 import { redirect } from "next/navigation";
 
 export default async function DashboardPage() {
-  // Check authentication
-  // const user = await getUser();
-// if (!user) {
-//   redirect('/auth/login');
-// }
+  const supabase = createServerComponentClient({ cookies })
+  const { data: { session } } = await supabase.auth.getSession()
+
+  if (!session) {
+    redirect('/auth/login')
+  }
 
   // Fetch accounts and strategies for the trade form
-  const { data: accounts = [] } = await getAccounts();
-  const { data: strategies = [] } = await getStrategies();
+  const { data: accounts = [] } = await getAccounts(session.user.id)
+  const { data: strategies = [] } = await getStrategies(session.user.id)
   
   // Fetch dashboard stats
-  const { data: stats } = await fetchDashboardStats();
+  const { data: stats } = await fetchDashboardStats(session.user.id);
   
   // Fetch recent trades
-  const { data: recentTrades = [] } = await fetchRecentTrades(5);
+  const { data: recentTrades = [] } = await fetchRecentTrades(session.user.id, 5);
   return (
     <div className="container py-8">
       <div className="flex justify-between items-center mb-8">

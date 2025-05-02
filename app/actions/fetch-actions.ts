@@ -309,16 +309,9 @@ export async function fetchTradeById(tradeId: string) {
   }
 }
 
-// Fetch dashboard stats
-export async function fetchDashboardStats() {
+// Fetch dashboard stats for a user
+export async function fetchDashboardStats(userId: string) {
   try {
-    // Get current user
-    const { data: { user } } = await supabaseServer.auth.getUser()
-    
-    if (!user) {
-      throw new Error('User not authenticated')
-    }
-    
     // Fetch total P&L
     const { data: plData, error: plError } = await supabaseServer
       .from('trade_closures')
@@ -326,7 +319,7 @@ export async function fetchDashboardStats() {
         pl,
         trade:trade_id(user_id)
       `)
-      .eq('trade.user_id', user.id)
+      .eq('trade.user_id', userId)
     
     if (plError) {
       throw new Error(`Failed to fetch P&L data: ${plError.message}`)
@@ -341,7 +334,7 @@ export async function fetchDashboardStats() {
         id,
         closures:trade_closures(pl)
       `)
-      .eq('user_id', user.id)
+      .eq('user_id', userId)
       .not('status', 'eq', 'open')
     
     if (tradesError) {
@@ -360,7 +353,7 @@ export async function fetchDashboardStats() {
     const { data: rData, error: rError } = await supabaseServer
       .from('trades')
       .select('r_multiple')
-      .eq('user_id', user.id)
+      .eq('user_id', userId)
       .not('status', 'eq', 'open')
     
     if (rError) {
@@ -399,16 +392,9 @@ export async function fetchDashboardStats() {
   }
 }
 
-// Fetch recent trades for dashboard
-export async function fetchRecentTrades(limit = 5) {
+// Fetch recent trades for a user's dashboard
+export async function fetchRecentTrades(userId: string, limit = 5) {
   try {
-    // Get current user
-    const { data: { user } } = await supabaseServer.auth.getUser()
-    
-    if (!user) {
-      throw new Error('User not authenticated')
-    }
-    
     const { data: rawTrades, error } = await supabaseServer
       .from('trades')
       .select(`
@@ -420,7 +406,7 @@ export async function fetchRecentTrades(limit = 5) {
         instrument:instrument_id(id, symbol),
         closures:trade_closures(pl)
       `)
-      .eq('user_id', user.id)
+      .eq('user_id', userId)
       .order('opened_at', { ascending: false })
       .limit(limit)
     

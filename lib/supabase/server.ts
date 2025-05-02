@@ -12,15 +12,23 @@ export const supabaseServer = createClient(supabaseUrl, supabaseServiceKey, {
 })
 import { cookies } from 'next/headers'
 
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+
 /**
  * Get the current authenticated user from cookies (for server components/actions)
  */
 export async function getUser() {
-  const cookieStore = await cookies()
-  const accessToken = cookieStore.get('sb-access-token')?.value
-  if (!accessToken) return null
-
-  const { data, error } = await supabaseServer.auth.getUser(accessToken)
-  if (error || !data?.user) return null
-  return data.user
+  try {
+    const supabase = createServerComponentClient({ cookies })
+    const { data: { session } } = await supabase.auth.getSession()
+    if (!session?.user) return null
+    
+    const { data: { user }, error } = await supabase.auth.getUser()
+    if (error || !user) return null
+    
+    return user
+  } catch (error) {
+    console.error('Error getting user:', error)
+    return null
+  }
 }

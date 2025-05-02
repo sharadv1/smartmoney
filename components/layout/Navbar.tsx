@@ -3,6 +3,9 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
+import { useSupabase } from '@/components/providers/SupabaseProvider'
+import type { Session } from '@supabase/auth-helpers-nextjs'
 
 const navItems = [
   { name: 'Dashboard', href: '/dashboard' },
@@ -12,8 +15,14 @@ const navItems = [
   { name: 'Settings', href: '/settings' },
 ]
 
-export function Navbar() {
+export function Navbar({ session }: { session: Session | null }) {
   const pathname = usePathname()
+  const { supabase } = useSupabase()
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut()
+    window.location.href = '/auth/login'
+  }
 
   return (
     <header className="bg-primary text-primary-foreground">
@@ -40,12 +49,29 @@ export function Navbar() {
           </nav>
         </div>
         <div className="flex items-center gap-4">
-          <Link
-            href="/auth/profile"
-            className="text-sm font-medium transition-colors hover:text-primary-foreground/80"
-          >
-            Profile
-          </Link>
+          {session ? (
+            <>
+              <span className="text-sm">{session.user.email}</span>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleSignOut}
+                className="text-primary-foreground hover:bg-primary-foreground/10"
+              >
+                Sign Out
+              </Button>
+            </>
+          ) : (
+            <Link href="/auth/login">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-primary-foreground hover:bg-primary-foreground/10"
+              >
+                Sign In
+              </Button>
+            </Link>
+          )}
         </div>
       </div>
     </header>

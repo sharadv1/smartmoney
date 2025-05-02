@@ -14,7 +14,7 @@ export type TradeFormData = {
   direction: 'long' | 'short'
   stopLoss: string
   takeProfit: string
-  notes: string
+  notes?: string
   accountId: string
   strategyId: string
 }
@@ -301,20 +301,13 @@ export async function closeTrade(
   }
 }
 
-// Get accounts for the current user
-export async function getAccounts() {
+// Get accounts for a user
+export async function getAccounts(userId: string) {
   try {
-    // Get current user
-    const { data: { user } } = await supabaseServer.auth.getUser()
-    
-    if (!user) {
-      throw new Error('User not authenticated')
-    }
-    
     const { data, error } = await supabaseServer
       .from('accounts')
       .select('id, name, broker')
-      .eq('user_id', user.id)
+      .eq('user_id', userId)
       .order('name')
     
     if (error) {
@@ -332,20 +325,13 @@ export async function getAccounts() {
   }
 }
 
-// Get strategies for the current user
-export async function getStrategies() {
+// Get strategies for a user
+export async function getStrategies(userId: string) {
   try {
-    // Get current user
-    const { data: { user } } = await supabaseServer.auth.getUser()
-    
-    if (!user) {
-      throw new Error('User not authenticated')
-    }
-    
     const { data, error } = await supabaseServer
       .from('strategies')
       .select('id, name, description')
-      .eq('user_id', user.id)
+      .eq('user_id', userId)
       .order('name')
     
     if (error) {
